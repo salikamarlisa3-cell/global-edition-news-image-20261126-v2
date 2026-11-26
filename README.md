@@ -31,9 +31,9 @@ are in [SOURCES.md](SOURCES.md).
 ## How it is built
 
 - `build_poster.py` — authoring tool: emits `poster.svg` from the
-  verified story data.
-- `generate.mjs` — renders `poster.svg` to `entry.png` (1024×1024)
-  with headless Chromium.
+  verified story data (the SVG is a build artifact, not committed).
+- `generate.mjs` — runs `build_poster.py`, then renders the SVG to
+  `entry.png` (1024×1024) with headless Chromium.
 - `main.ts` — the competition program: delivers `entry.png` byte for
   byte to the output directory and verifies the copy. It renders
   nothing, so the judged output is exactly the page above.

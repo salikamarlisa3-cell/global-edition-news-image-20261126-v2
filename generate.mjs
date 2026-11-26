@@ -1,7 +1,8 @@
-// generate.mjs — renders poster.svg to entry.png at exactly 1024x1024
-// with the locally cached Chromium headless shell. Authoring tool only:
-// the competition program (main.ts) never renders anything, it just
-// delivers the entry.png produced here.
+// generate.mjs — builds the poster end to end: runs build_poster.py to
+// emit poster.svg (a build artifact, not committed), then renders it to
+// entry.png at exactly 1024x1024 with the locally cached Chromium
+// headless shell. Authoring tool only: the competition program
+// (main.ts) never renders anything, it just delivers entry.png.
 //
 //   node generate.mjs
 //
@@ -14,6 +15,11 @@ import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
+
+// Step 1: emit poster.svg from the story data.
+execFileSync('python3', [join(here, 'build_poster.py')],
+             { cwd: here, stdio: 'inherit' });
+
 const svgUrl = pathToFileURL(join(here, 'poster.svg')).href;
 const shot = join(here, 'render.png');
 
